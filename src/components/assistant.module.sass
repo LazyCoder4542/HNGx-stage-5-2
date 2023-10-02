@@ -1,8 +1,18 @@
 .assistant
-  background: white
-  width: 10rem
-  height: 10rem
   position: absolute
-  transform: translate(-100%, -100%)
-  .robot > img
-    width: 1rem
+  transition: all 1000ms
+  .idle > img
+    width: 5rem
+  .box
+    border-radius: .5rem
+    display: flex
+    border: 1px solid black
+    padding: .5rem
+    align-items: center
+    backdrop-filter: blur(5px)
+    color: lightblue
+    gap: .5rem
+    .robot > img
+      width: 2rem
+    .content
+      width: 10rem

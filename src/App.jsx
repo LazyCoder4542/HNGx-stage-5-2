@@ -1,11 +1,22 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { useAssistant } from './components/assistantContext'
 
 function App() {
   const [count, setCount] = useState(0)
-
+  const {triggerPopup, clearAssistant} = useAssistant()
+  const ref = useRef(null)
+  const handleMouseOver = (e) => {
+    let rect = e.target.getBoundingClientRect()
+    console.log(rect);
+    triggerPopup(e.target.getAttribute("aria-label"), {x: rect.x + rect.width, y: rect.y + rect.height})
+  }
+  const handleMouseOut = (e) => {
+    console.log(e);
+    clearAssistant()
+  }
   return (
     <>
       <div>
@@ -18,8 +29,19 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        <button
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+        aria-label='Click this button to increase count'
+        onClick={() => setCount((count) => count + 1)}>
           count is {count}
+        </button>
+        <button
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+        aria-label='Click this button to reset count'
+        onClick={() => setCount(0)}>
+          Reset count
         </button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
